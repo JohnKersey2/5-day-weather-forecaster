@@ -112,41 +112,40 @@ function fetchCityData(city) {
     
 }
 
-searchBtn.addEventListener('click', citySelection);
-
-function createHistory() {
-    var searchedCity = cityInput.value
-    savedContainer = document.createElement('ul');
-    savedContainer.classList.add('previous-searches');
-    searchArea.removeChild(searchArea.lastChild);
-    searchArea.append(savedContainer);
-    if (searchedCity === '') {
-        alert('Please enter a city and click "Search"');
-        getCityHistory();
-        return;
-    }
+// function createHistory() {
+//     var searchedCity = cityInput.value
+//     savedContainer = document.createElement('ul');
+//     savedContainer.classList.add('previous-searches');
+//     searchArea.removeChild(searchArea.lastChild);
+//     searchArea.append(savedContainer);
+//     if (searchedCity === '') {
+//         alert('Please enter a city and click "Search"');
+//         getCityHistory();
+//         return;
+//     }
     
-    var storage = JSON.parse(localStorage.getItem('cityArray'));
-    if(storage === null){
-        storage = [];
-    }
-    if (!storage.includes(searchedCity)) {
-        storage.push(searchedCity);
-    } else {
-        fetchCityData();
-    }
-    localStorage.setItem('cityArray', JSON.stringify(storage));
-    for (var i = 0; i < storage.length; i++) {
-        //create history buttons
-        var savedLi = document.createElement('button');
-        savedLi.textContent = storage[i];
-        savedLi.setAttribute('id', storage[i]);
-        savedContainer.append(savedLi);
-        savedLi.addEventListener('click', function (event) {
-            var clickedCity = event.target.id;
-            fetchCityData(clickedCity);
-        })
-    }
-}
+//     var storage = JSON.parse(localStorage.getItem('cityArray'));
+//     if(storage === null){
+//         storage = [];
+//     }
+//     if (!storage.includes(searchedCity)) {
+//         storage.push(searchedCity);
+//     } else {
+//         fetchCityData();
+//     }
+//     localStorage.setItem('cityArray', JSON.stringify(storage));
+//     for (var i = 0; i < storage.length; i++) {
+//         //create history buttons
+//         var savedLi = document.createElement('button');
+//         savedLi.textContent = storage[i];
+//         savedLi.setAttribute('id', storage[i]);
+//         savedContainer.append(savedLi);
+//         savedLi.addEventListener('click', function (event) {
+//             var clickedCity = event.target.id;
+//             fetchCityData(clickedCity);
+//         })
+//     }
+// }
 
-searchBtn.addEventListener('click', createHistory);
+// searchBtn.addEventListener('click', createHistory);
+searchBtn.addEventListener('click', citySelection);
