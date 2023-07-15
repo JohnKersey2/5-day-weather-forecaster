@@ -1,10 +1,13 @@
-var searchBtn = document.querySelector('#searchBtn');
+var searchBtn = document.querySelector('#search-button');
 var cityInput = document.querySelector('#city');
-var searchArea = document.querySelector('#search');
-var currentWeather = document.querySelector('#currentWeather');
+var searchArea = document.querySelector('.search-area');
+var currentWeather = document.querySelector('.current-weather');
 var forecast = document.querySelector('#forecast');
 
+var prevCityBtn = document.querySelector('.prevCityBtn');
+
 var today = dayjs().format('M/D/YYYY');
+console.log(today)
 
 var citySelection = function (event) {
     event.preventDefault();
@@ -26,6 +29,65 @@ var citySelection = function (event) {
         cityArray.push(cityName);
     }
     localStorage.setItem('cityArray', JSON.stringify(cityArray));
+}
+
+function getCityHistory() {
+    var savedStorage = JSON.parse(localStorage.getItem('cityArray'))
+    console.log('city array', savedStorage)
+    var prevCityList = document.createElement('ul');
+    var listElement = document.createElement('li');
+    if (savedStorage === null){
+        savedStorage = []
+    }
+    
+    for (var i = 0; i < savedStorage.length; i++){
+        var prevCity = document.createElement('button');
+        prevCity.textContent = savedStorage[i]; //button text
+        prevCity.setAttribute('id', savedStorage[i]);
+        listElement.appendChild(prevCity); //add button as an li
+        prevCity.classList.add('prevCityBtn');
+        prevCityList.appendChild(listElement); 
+        
+        prevCity.addEventListener('click', function(event) {
+            var chosenCity = event.target.id;
+            fetchCityData(chosenCity);
+        });
+    }
+}
+
+function createHistory() {
+    var searchedCity = cityInput.value
+    savedContainer = document.createElement('ul');
+    savedContainer.classList.add('previous-searches');
+    searchArea.removeChild(searchArea.lastChild);
+    searchArea.append(savedContainer);
+    if (searchedCity === '') {
+        alert('Please enter a city and click "Search"');
+        getCityHistory();
+        return;
+    }
+    
+    var storage = JSON.parse(localStorage.getItem('cityArray'));
+    if(storage === null){
+        storage = [];
+    }
+    if (!storage.includes(searchedCity)) {
+        storage.push(searchedCity);
+    } else {
+        fetchCityData();
+    }
+    localStorage.setItem('cityArray', JSON.stringify(storage));
+    for (var i = 0; i < storage.length; i++) {
+        //create history buttons
+        var savedLi = document.createElement('button');
+        savedLi.textContent = storage[i];
+        savedLi.setAttribute('id', storage[i]);
+        savedContainer.append(savedLi);
+        savedLi.addEventListener('click', function (event) {
+            var clickedCity = event.target.id;
+            fetchCityData(clickedCity);
+        })
+    }
 }
 
 function fetchCityData(city) {
@@ -112,40 +174,5 @@ function fetchCityData(city) {
     
 }
 
-// function createHistory() {
-//     var searchedCity = cityInput.value
-//     savedContainer = document.createElement('ul');
-//     savedContainer.classList.add('previous-searches');
-//     searchArea.removeChild(searchArea.lastChild);
-//     searchArea.append(savedContainer);
-//     if (searchedCity === '') {
-//         alert('Please enter a city and click "Search"');
-//         getCityHistory();
-//         return;
-//     }
-    
-//     var storage = JSON.parse(localStorage.getItem('cityArray'));
-//     if(storage === null){
-//         storage = [];
-//     }
-//     if (!storage.includes(searchedCity)) {
-//         storage.push(searchedCity);
-//     } else {
-//         fetchCityData();
-//     }
-//     localStorage.setItem('cityArray', JSON.stringify(storage));
-//     for (var i = 0; i < storage.length; i++) {
-//         //create history buttons
-//         var savedLi = document.createElement('button');
-//         savedLi.textContent = storage[i];
-//         savedLi.setAttribute('id', storage[i]);
-//         savedContainer.append(savedLi);
-//         savedLi.addEventListener('click', function (event) {
-//             var clickedCity = event.target.id;
-//             fetchCityData(clickedCity);
-//         })
-//     }
-// }
-
-// searchBtn.addEventListener('click', createHistory);
 searchBtn.addEventListener('click', citySelection);
+searchBtn.addEventListener('click', createHistory);
