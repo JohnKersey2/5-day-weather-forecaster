@@ -11,5 +11,6 @@ For this project, I was to create a front end application that utilized WeatherA
 
 I was to be able to search for a city. When that city returned, the page should display current whether conditions, as well as a 5 day forecast. Additionally, you should be able to save and store a search history that a user can click on to pull up that city again.
 
-## Known Issues
+## Screenshot
 
+[Screenshot](/5DayScreenshot.png)
