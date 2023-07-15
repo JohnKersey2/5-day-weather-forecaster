@@ -13,4 +13,4 @@ I was to be able to search for a city. When that city returned, the page should 
 
 ## Screenshot
 
-[Screenshot](/5DayScreenshot.png)
+![Screenshot](/5DayScreenshot.png)
