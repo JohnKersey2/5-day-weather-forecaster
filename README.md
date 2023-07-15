@@ -13,6 +13,3 @@ I was to be able to search for a city. When that city returned, the page should 
 
 ## Known Issues
 
-Forecast system not displaying correctly
-
-History not properly implemented.
